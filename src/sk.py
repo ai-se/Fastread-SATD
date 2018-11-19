@@ -118,7 +118,7 @@ def _tileX():
   import random
   random.seed(1)
   nums = [random.random() ** 2 for _ in range(100)]
-  print xtile(nums, lo=0, hi=1.0, width=25, show=" %0.3E")
+  print (xtile(nums, lo=0, hi=1.0, width=25, show=" %0.3E"))
 """
 
 ### Standard Accumulator for Numbers
@@ -243,11 +243,11 @@ def _a12():
   def f2():
     return a12(l1, l2)
   for n in [100, 200, 400, 800, 1600, 3200, 6400]:
-    l1 = [rand() for _ in xrange(n)]
-    l2 = [rand() for _ in xrange(n)]
+    l1 = [rand() for _ in range(n)]
+    l2 = [rand() for _ in range(n)]
     t1 = msecs(f1)
     t2 = msecs(f2)
-    print n, g(f1()), g(f2()), int((t1 / t2))
+    print (n, g(f1()), g(f2()), int((t1 / t2)))
 
 
 """Output:
@@ -384,17 +384,17 @@ def _bootstraped():
     return n, mu1, sigma1, mu2, sigma2, \
         'different' if bootstrap(x, y) else 'same'
   # very different means, same std
-  print worker(mu1=10, sigma1=10,
-               mu2=100, sigma2=10)
+  print (worker(mu1=10, sigma1=10,
+               mu2=100, sigma2=10))
   # similar means and std
-  print worker(mu1=10.1, sigma1=1,
-               mu2=10.2, sigma2=1)
+  print (worker(mu1=10.1, sigma1=1,
+               mu2=10.2, sigma2=1))
   # slightly different means, same std
-  print worker(mu1=10.1, sigma1=1,
-               mu2=10.8, sigma2=1)
+  print (worker(mu1=10.1, sigma1=1,
+               mu2=10.8, sigma2=1))
   # different in mu eater by large std
-  print worker(mu1=10.1, sigma1=10,
-               mu2=10.8, sigma2=1)
+  print (worker(mu1=10.1, sigma1=10,
+               mu2=10.8, sigma2=1))
 """
 
 Output:
@@ -570,7 +570,7 @@ def rdivDemo(data, isLatex=False, globalMinMax=False, high=100, low=0):
       return int(80 * (x - lo) / (hi - lo + 0.00001))
 
 
-    print ""
+    print ("")
     ranks = []
 
     for x in scottknott(data, useA12=True):
@@ -583,17 +583,17 @@ def rdivDemo(data, isLatex=False, globalMinMax=False, high=100, low=0):
       lo, hi = min(low, all[0]), max(all[-1], high)
     else:
       lo, hi = all[0], all[-1]
-    print r'{\scriptsize \begin{tabular}{l@{~~~}l@{~~~}r@{~~~}r@{~~~}c}'
-    print r'\arrayrulecolor{lightgray}'
+    print (r'{\scriptsize \begin{tabular}{l@{~~~}l@{~~~}r@{~~~}r@{~~~}c}')
+    print (r'\arrayrulecolor{lightgray}')
     # min= %s, max= %s\\\\' % (int(lo),int(hi))
-    print r'\textbf{Rank} & \textbf{Treatment} & \textbf{Median} & \textbf{IQR} & \\\hline'
+    print (r'\textbf{Rank} & \textbf{Treatment} & \textbf{Median} & \textbf{IQR} & \\\hline')
     last = None
     for _, __, x in sorted(ranks):
       q1, q2, q3 = x.quartiles()
       pre = ""
       if not last is None and not last == x.rank:
         pre = "\\hline"
-      print pre, r'%2s & %12s &    %s  &  %s & \quart{%s}{%s}{%s}{%s} \\' % \
+      print (pre, r'%2s & %12s &    %s  &  %s & \quart{%s}{%s}{%s}{%s} \\' % \
           (x.rank + 1,
            x.name,
            float(q2 / 100),
@@ -601,9 +601,9 @@ def rdivDemo(data, isLatex=False, globalMinMax=False, high=100, low=0):
               z(q1),
               z(q3) - z(q1),
               z(q2),
-              z(100))
+              z(100)))
       last = x.rank
-    print r"\hline \end{tabular}}"
+    print (r"\hline \end{tabular}}")
     return ranks
 #     print('''
 #     \end{document}
@@ -612,7 +612,7 @@ def rdivDemo(data, isLatex=False, globalMinMax=False, high=100, low=0):
     def z(x):
       return int(100 * (x - lo) / (hi - lo + 0.00001))
 
-    print ""
+    print ("")
     ranks = []
     for x in scottknott(data, useA12=True):
       ranks += [(x.rank, x.median(), x)]

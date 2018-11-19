@@ -150,7 +150,7 @@ class MAR(object):
 
 
         content = [self.body["Document Title"][index] + " " + self.body["Abstract"][index] for index in
-                   xrange(len(self.body["Document Title"]))]
+                   range(len(self.body["Document Title"]))]
         tfer = TfidfVectorizer(lowercase=True, stop_words="english", norm=None, use_idf=False,
                                vocabulary=self.voc, decode_error="ignore")
         self.csr_mat = tfer.fit_transform(content)
@@ -499,7 +499,7 @@ class MAR(object):
 
         ### Combine title and abstract for training ###########
         content = [self.body["Document Title"][index] + " " + self.body["Abstract"][index] for index in
-                   xrange(len(self.body["Document Title"]))]
+                   range(len(self.body["Document Title"]))]
         #######################################################
 
         ### Feature selection by tfidf in order to keep vocabulary ###

@@ -5,9 +5,8 @@ from pdb import set_trace
 from demos import cmd
 import pickle
 import matplotlib.pyplot as plt
-
+from mar import MAR
 from sk import rdivDemo
-
 import random
 
 from collections import Counter
@@ -26,7 +25,6 @@ def active_learning(filename, query='', stop='true', stopat=1.00, error='none', 
     read.interval = interval
 
     read.BM25(query.strip().split('_'))
-
 
     num2 = read.get_allpos()
     target = int(num2 * stopat)
@@ -97,4 +95,5 @@ def active_learning(filename, query='', stop='true', stopat=1.00, error='none', 
 
 
 if __name__ == "__main__":
-    eval(cmd())
+    active_learning('Hall.csv')
+    #eval(cmd())
