@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 from mar import MAR
 from sk import rdivDemo
 import random
-
 from collections import Counter
 
-def active_learning(filename, query='', stop='true', stopat=1.00, error='none', interval = 100000, seed=0):
+
+def active_learning(filename, query='', stop='true', stopat=.95, error='none', interval=100000, seed=0):
     stopat = float(stopat)
     thres = 0
     starting = 1
@@ -36,12 +36,12 @@ def active_learning(filename, query='', stop='true', stopat=1.00, error='none', 
     while True:
         pos, neg, total = read.get_numbers()
         try:
-            print("%d, %d, %d" %(pos,pos+neg, read.est_num))
+            print("%d, %d, %d" % (pos, pos + neg, read.est_num))
         except:
-            print("%d, %d" %(pos,pos+neg))
+            print("%d, %d" % (pos, pos + neg))
 
         if pos + neg >= total:
-            if stop=='knee' and error=='random':
+            if stop == 'knee' and error == 'random':
                 coded = np.where(np.array(read.body['code']) != "undetermined")[0]
                 seq = coded[np.argsort(read.body['time'][coded])]
                 part1 = set(seq[:read.kneepoint * read.step]) & set(
@@ -52,33 +52,33 @@ def active_learning(filename, query='', stop='true', stopat=1.00, error='none', 
                     read.code_error(id, error=error)
             break
 
-        if pos < starting or pos+neg<thres:
+        if pos < starting or pos + neg < thres:
             for id in read.BM25_get():
                 read.code_error(id, error=error)
         else:
-            a,b,c,d =read.train(weighting=True,pne=True)
+            a, b, c, d = read.train(weighting=True, pne=True)
             if stop == 'est':
                 if stopat * read.est_num <= pos:
                     break
             elif stop == 'soft':
-                if pos>=10 and pos_last==pos:
-                    counter = counter+1
+                if pos >= 10 and pos_last == pos:
+                    counter = counter + 1
                 else:
-                    counter=0
-                pos_last=pos
-                if counter >=5:
+                    counter = 0
+                pos_last = pos
+                if counter >= 5:
                     break
             elif stop == 'knee':
-                if pos>=10:
+                if pos >= 10:
                     if read.knee():
-                        if error=='random':
+                        if error == 'random':
                             coded = np.where(np.array(read.body['code']) != "undetermined")[0]
                             seq = coded[np.argsort(np.array(read.body['time'])[coded])]
                             part1 = set(seq[:read.kneepoint * read.step]) & set(
                                 np.where(np.array(read.body['code']) == "no")[0])
                             part2 = set(seq[read.kneepoint * read.step:]) & set(
                                 np.where(np.array(read.body['code']) == "yes")[0])
-                            for id in part1|part2:
+                            for id in part1 | part2:
                                 read.code_error(id, error=error)
                         break
             else:
@@ -90,10 +90,10 @@ def active_learning(filename, query='', stop='true', stopat=1.00, error='none', 
             else:
                 for id in c:
                     read.code_error(id, error=error)
-    set_trace()                
+    set_trace()
     return read
 
 
 if __name__ == "__main__":
     active_learning('Hall.csv')
-    #eval(cmd())
+    # eval(cmd())
