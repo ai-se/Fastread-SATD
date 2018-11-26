@@ -20,9 +20,7 @@ class MAR(object):
 
     def create(self, filename):
         self.filename = filename
-        self.name = self.filename.split(".")[0]
         self.hasLabel = True
-        self.record = {"x": [], "pos": []}
         self.body = {}
         self.round = 0
 
@@ -81,13 +79,7 @@ class MAR(object):
         total = len(self.body["code"])
         pos = Counter(self.body["code"])["yes"]
         neg = Counter(self.body["code"])["no"]
-        try:
-            tmp = self.record['x'][-1]
-        except:
-            tmp = -1
-        if int(pos + neg) > tmp:
-            self.record['x'].append(int(pos + neg))
-            self.record['pos'].append(int(pos))
+
         self.pool = np.where(np.array(self.body['code']) == "undetermined")[0]
         self.labeled = list(set(range(len(self.body['code']))) - set(self.pool))
         return pos, neg, total

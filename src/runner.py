@@ -50,7 +50,7 @@ def active_learning(filename, query='', stopat=.95, error='none', interval=10000
                 # Certainity Sampling
                 for id in c:
                     read.code_error(id, error=error)
-    set_trace()
+    #set_trace()
     return read
 
 
