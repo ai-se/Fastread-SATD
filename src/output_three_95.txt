@@ -1,0 +1,13 @@
+Ground Truth: True 285 | False 6929
+Target: 270
+Positive 271, Total Looked 899
+             precision    recall  f1-score   support
+
+         no      0.947     0.802     0.869       742
+        yes      0.458     0.790     0.579       157
+
+avg / total      0.862     0.800     0.818       899
+
+[[595 147]
+ [ 33 124]]
+END
