@@ -20,18 +20,23 @@ logger.disabled = True
 
 class MAR(object):
     def __init__(self):
-        self.fea_count = 40       # FAHID feature counts for building TFIDF
+        self.fea_count = 4000       # FAHID feature counts for building TFIDF
         self.step = 10              # FAHID after how many steps we want to train again
         self.enough = 30            # FAHID convert to agressive undersampling
         self.atleast = 100          # FAHID if we have unlabeled data, assume all negative (as the chances are very low)
         self.interval = 500000000   # FAHID should we do error correction or not, or something to do with that
         random.seed(0)
 
-    def create(self, filename):
+        # FAHID
+        self.true_count = 0
+        self.false_count = 0
+
+    def create(self, filename, dataset=None):
         self.filename = filename
         self.hasLabel = True
         self.body = None
         self.round = 0
+        self.dataset = dataset
 
         try:
             self.loadfile()
@@ -45,7 +50,10 @@ class MAR(object):
         with open("../workspace/td/" + self.filename, "r") as csvfile:
             content = [x for x in csv.reader(csvfile, delimiter=',')]
 
-        project_based_content = [x for x in content[1:] if x[0]=='sql12']
+        if self.dataset:
+            project_based_content = [x for x in content[1:] if x[0]==self.dataset]
+        else:
+            project_based_content = content
 
         data_pd = pandas.DataFrame(project_based_content[1:], columns=content[0])
 
@@ -58,6 +66,8 @@ class MAR(object):
         false_count = len(data_pd[(data_pd['label'] == 'no')])
         print("Ground Truth: True " + str(true_count) + " | False " + str(false_count))
 
+        self.true_count = true_count
+        self.false_count = false_count
 
         self.body = data_pd
         return
@@ -265,7 +275,7 @@ class MAR(object):
             else:
                 new = 'yes'
         else:
-            if random.random() < error_rate:
+            if random.random() < error_rate :
                 new = 'yes'
             else:
                 new = 'no'

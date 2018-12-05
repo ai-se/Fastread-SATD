@@ -5,6 +5,8 @@ from pdb import set_trace
 from demos import cmd
 import pickle
 import matplotlib.pyplot as plt
+
+from duo import predict_svm
 from mar import MAR
 from sk import rdivDemo
 import random
@@ -73,11 +75,24 @@ def active_learning(filename, query='', stopat=.95, error='three', interval=1000
     # #set_trace()
     # return read
 
+def duo(filename):
+    read = MAR()
+    read = read.create(filename)
+    predict_svm(read, C=1.0, kernel='linear')
+    predict_svm(read, C=1.0, kernel='rbf', gamma='auto')
+    predict_svm(read, C=1.0, kernel='rbf', gamma=1e-1)
+    predict_svm(read, C=10.0, kernel='linear')
+    predict_svm(read, C=10.0, kernel='rbf', gamma='auto')
+    predict_svm(read, C=10.0, kernel='rbf', gamma=1e-1)
+    predict_svm(read, C=40.0, kernel='linear')
+    predict_svm(read, C=40.0, kernel='rbf', gamma='auto')
+    predict_svm(read, C=40.0, kernel='rbf', gamma=1e-1)
 
 if __name__ == "__main__":
 
-    active_learning('td_2016.csv')
-    print("END")
+    # active_learning('td_2016.csv')
+    duo('td_2016.csv')
+
     # eval(cmd())
 
 
