@@ -3,10 +3,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
 
-import logging
-logging.basicConfig(filename='logs/test_4000.log', filemode='w', level=logging.INFO, format='%(asctime)s %(message)s')
-logger = logging.getLogger(__name__)
-logger.disabled = False
+
 
 def predict_svm(mar, C=1.0, kernel='rbf', gamma='auto', coef0=0.0):
     # Stratification attempts to maintain the realtive ratios
@@ -82,6 +79,6 @@ def predict_svm(mar, C=1.0, kernel='rbf', gamma='auto', coef0=0.0):
     f1_mean = sum(svm_f1) / len(svm_f1)
     prec_mean = sum(svm_prec) / len(svm_prec)
     recl_mean = sum(svm_recl) / len(svm_recl)
-    logger.info("F1: " + str(f1_mean))
-    logger.info("Prec: " + str(prec_mean))
-    logger.info("Recall: " + str(recl_mean))
+
+
+
