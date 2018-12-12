@@ -80,3 +80,24 @@ def top_feats_by_class(Xtr, y, features, min_tfidf=0.1, top_n=25):
         dfs.append(feats_df)
     return dfs
 
+def process_output(datasets, filename):
+    output = []
+    with open("logs/" + filename, "r") as f:
+        for line in f.readlines():
+            if "Optimized" in line:
+               output.append(line)
+
+    file = open('cross_proj_f_only.txt', 'w')
+    file.write(output)
+
+    for dataset in datasets:
+        output = []
+        with open("logs/" + filename, "r") as f:
+            for line in f.readlines():
+                if dataset in line:
+                    output.append(line)
+
+        file = open('cross_proj_' + dataset + ".txt", 'w')
+        file.write(output)
+
+
