@@ -11,16 +11,11 @@ from tuner import TUNER
 import numpy as np
 
 
-FOLD = 5
-POOL_SIZE = 100000
-INIT_POOL_SIZE = 10
-BUDGET = 20
-
 import logging
 logger = logging.getLogger(__name__)
 
 
-def k_fold_with_tuning(test_data, train_data, fold=FOLD):
+def k_fold_with_tuning(test_data, train_data, fold, pool_size, init_pool, budget, label=''):
     """
     We split the train_data into train set and tune set and do our hyperparameter optimization on train and tune. Then,
     for each fold, we predict the final F score for our Test data.
@@ -31,7 +26,7 @@ def k_fold_with_tuning(test_data, train_data, fold=FOLD):
     :param fold: int number of folds
     :return:
     """
-    logger.info("Starting our " + str(fold) + " fold cross validation for " + test_data.data_pd.iloc[0]['projectname'])
+    logger.info(label + " | Starting our " + str(fold) + " fold cross validation for " + test_data.data_pd.iloc[0]['projectname'])
 
     skfolds = StratifiedKFold(n_splits=fold, random_state=0)
 
@@ -40,11 +35,12 @@ def k_fold_with_tuning(test_data, train_data, fold=FOLD):
 
     # This is a list of confusion matrix recieved from each fold.
     conf_mat = []
+    clfs = []
 
     fold_num = 0
 
     for train_index, tune_index in skfolds.split(train_data.csr_mat, y_train):
-        logger.info("Starting a fold")
+        logger.info(label + " | Starting a fold")
         # Training data
         # -------------
         x_train_folds = train_data.csr_mat[train_index]
@@ -56,7 +52,8 @@ def k_fold_with_tuning(test_data, train_data, fold=FOLD):
 
         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
         # -------------------------------------
-        clf = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num)
+        clf = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num,
+                            pool_size, init_pool, budget, label)
         # clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
         # clf.fit(train_data.csr_mat, y_train)
         # # run optimized clf on the test data and record the confusion matrix
@@ -64,30 +61,31 @@ def k_fold_with_tuning(test_data, train_data, fold=FOLD):
         y_test_pred = clf.predict(test_data.csr_mat)
         mat = confusion_matrix(y_test, y_test_pred)
         conf_mat.append(mat)
-        logger.info("Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
+        clfs.append(clf)
+        logger.info(label + " | Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
 
         fold_num += 1
 
-    return conf_mat
+    return conf_mat, clfs
 
 
-def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, budget=INIT_POOL_SIZE):
+def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_pool, budget, label=''):
     import warnings
     warnings.filterwarnings("ignore", category=DeprecationWarning)
 
     tuner = TUNER(fold_num)
     random.seed(fold_num)
-    budget = BUDGET
+    this_budget = budget
 
     # Make initial population
-    param_search_space = tuner.generate_param_pools(POOL_SIZE)
+    param_search_space = tuner.generate_param_pools(pool_size)
 
     # Evaluate initial pool
-    evaluted_configs = random.sample(param_search_space, INIT_POOL_SIZE)
+    evaluted_configs = random.sample(param_search_space, init_pool)
     param_search_space = list(set(param_search_space).difference(set(evaluted_configs)))
 
     f_scores = [measure_fitness(x_train, y_train, x_tune, y_tune, configs) for configs in evaluted_configs]
-    logger.info("F Score of init pool: " + str(f_scores))
+    logger.info(label + " | F Score of init pool: " + str(f_scores))
 
     # hold best values
     ids = np.argsort(f_scores)[::-1][:1]
@@ -100,7 +98,7 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, budget=INIT_POOL
 
     # number of eval
     eval = 0
-    while budget > 0:
+    while this_budget > 0:
         cart_model = DecisionTreeRegressor(random_state=1)
         cart_model.fit(evaluted_configs, f_scores)
 
@@ -116,12 +114,12 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, budget=INIT_POOL
         if isBetter(next_f, best_f):
             best_config = next_config
             best_f = next_f
-            budget += 1
-            logger.info("new F: " + str(best_f) + " budget " + str(budget))
-        budget -= 1
+            this_budget += 1
+            logger.info(label + " | new F: " + str(best_f) + " budget " + str(this_budget))
+        this_budget -= 1
         eval += 1
 
-    logger.info("Eval: " + str(eval))
+    logger.info(label+ " | Eval: " + str(eval))
 
     clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
     clf.fit(x_train, y_train)
@@ -171,4 +169,67 @@ def calc_f(cmat):
     f1 = 2 * (prec * recall) / (prec + recall)
 
     return f1
+
+
+
+
+# def k_fold_test(data, fold=5):
+#     skfolds = StratifiedKFold(n_splits=fold, random_state=0)
+#     y_vals = data.data_pd.loc[:, 'label']
+#     fold_num = 0
+#     for train_index, tune_index in skfolds.split(data.csr_mat, y_vals):
+#         # Training data
+#         # -------------
+#         x_train_folds = data.csr_mat[train_index]
+#         y_train_folds = y_vals.iloc[train_index]
+#         # Tuning data
+#         # ------------
+#         x_test_folds = data.csr_mat[tune_index]
+#         y_test_folds = y_vals.iloc[tune_index]
+#
+#         k_fold_with_tuning(x_train_folds, y_train_folds, x_test_folds, y_test_folds, fold=FOLD)
+#
+#         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
+#         # -------------------------------------
+#         conf_mat = tune_with_flash(x_train_folds, y_train_folds, x_test_folds, y_test_folds, fold=5)
+#
+# def k_fold_tuning(x_train, y_train, x_test, y_test, fold=FOLD):
+#
+#     skfolds = StratifiedKFold(n_splits=fold, random_state=0)
+#
+#     # This is a list of confusion matrix recieved from each fold.
+#     conf_mat = []
+#
+#     fold_num = 0
+#
+#     for train_index, tune_index in skfolds.split(x_train, y_train):
+#         logger.info("Starting a fold")
+#         # Training data
+#         # -------------
+#         x_train_folds = x_train[train_index]
+#         y_train_folds = y_train.iloc[train_index]
+#          # Tuning data
+#         # ------------
+#         x_tune_folds = x_train[tune_index]
+#         y_tune_folds = y_train.iloc[tune_index]
+#
+#         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
+#         # -------------------------------------
+#         clf = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num)
+#         # clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
+#         # clf.fit(train_data.csr_mat, y_train)
+#         # # run optimized clf on the test data and record the confusion matrix
+#         # -------------------------------------
+#         y_test_pred = clf.predict(y_train)
+#         mat = confusion_matrix(y_test, y_test_pred)
+#         conf_mat.append(mat)
+#         logger.info("Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
+#
+#         fold_num += 1
+#
+#     return conf_mat
+#
+#
+#
+
 

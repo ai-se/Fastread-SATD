@@ -10,6 +10,7 @@ from duo import predict_svm
 from loader import SATDD
 from mar import MAR
 from processor import k_fold_with_tuning
+from rig import run_rig
 from sk import rdivDemo
 import random
 from collections import Counter
@@ -79,15 +80,16 @@ def active_learning(filename, query='', stopat=.95, error='three', interval=1000
     # return read
 
 
+
+
 def duo(filename):
     satdd = SATDD()
     satdd = satdd.load_data(filename)
-    training_data = satdd.create_and_process_dataset(['apache-ant-1.7.0', 'argouml', 'sql12', 'jEdit-4.2',
-                                                      'jfreechart-1.0.19', 'columba-1.4-src'],
+    training_data = satdd.create_and_process_dataset(['apache-ant-1.7.0', 'apache-jmeter-2.10', 'columba-1.4-src'],
                                                      doInclude=False)
     # no need to give a tfidf, will calculate itself
     training_data.set_csr_mat()
-    test_data = satdd.create_and_process_dataset(['apache-ant-1.7.0'], doInclude=True)
+    test_data = satdd.create_and_process_dataset(['columba-1.4-src'], doInclude=True)
     # need to give the tfidf from training set, will just use transform to create csr_matrix
     test_data.set_csr_mat(training_data.tfer)
 
@@ -99,40 +101,9 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
     logger = logging.getLogger(__name__)
 
-    logger.info("test")
-
-
+    run_rig('td_2016.csv')
     # active_learning('td_2016.csv')
 
 
-    duo('td_2016.csv')
+    # duo('td_2016.csv')
     # eval(cmd())
-
-
-
-# NOTES
-"""
-why not cart finding better solutions??
-79266, 12 eval (5) | 79266, 1 eval (20)
-66666, 17 eval (20)
-> 66966, 50 eval (20)
-can find better solution, only slightly though. a 10 init and 20 budget works
-DONE
-
-why having so bad F score finally? 
-Making tfidf using only training? 
-No, this is not the case. 
-DONE
-
-
-Cross project? 
-should try to use training data only. do a k-fold on k-fold and see if it helps.
-Thoughts: are we suppose to hold the training data fully?
-
-
-Other vectorization?
-can we use a word2vec? or sentence2vec?
-
-READ again
-
-"""

@@ -14,7 +14,6 @@ from utility import tokenize, top_mean_feats
 import logging
 logger = logging.getLogger(__name__)
 
-MAX_FEATURES = None
 
 class SATDD:
     def __init__(self):
@@ -70,9 +69,9 @@ class DATASET:
         # tfer = TfidfVectorizer(tokenizer=tokenize, preprocessor=None, lowercase=True, stop_words=None, norm='l2',
         #                        use_idf=True, max_features=MAX_FEATURES, decode_error="ignore")
 
-        logger.info("Ground Truth: True " + str(self.true_count) + " | False " + str(self.false_count))
+        # logger.info("Ground Truth: True " + str(self.true_count) + " | False " + str(self.false_count))
 
-    def set_csr_mat(self, tfer=None):
+    def set_csr_mat(self, max_f, stop_w, tfer=None ):
         """
 
         :param tfer: if training set, give nothing, it will learn and fit_transform. But for Test, it should use
@@ -83,8 +82,8 @@ class DATASET:
             self.tfer = tfer
             self.csr_mat = tfer.transform(self.data_pd['commenttext'])
         else:
-            self.tfer = TfidfVectorizer(lowercase=True, stop_words="english", norm='l2',
-                                        use_idf=True, max_features=MAX_FEATURES, decode_error="ignore")
+            self.tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
+                                        use_idf=True, max_features=max_f, decode_error="ignore")
             self.csr_mat = self.tfer.fit_transform(self.data_pd['commenttext'])
 
 

@@ -1,0 +1,9 @@
+Budget 10, Init 10, Feature 1k, Cross project on argouml
+
+INFO:loader:Ground Truth: True 2153 | False 38515
+INFO:loader:Ground Truth: True 1413 | False 8039
+INFO:processor:Starting our 5 fold cross validation for argouml
+INFO:processor:Starting a fold
+INFO:processor:F Score of init pool: [0.7593880389429764, 0.6549560853199498, 0.6483790523690773, 0.7589041095890412, 0.7523680649526387, 0.7622950819672132, 0.7633378932968536, 0.6883116883116883, 0.7578659370725034, 0.7794316644113667]
+INFO:processor:Eval: 10
+INFO:processor:Optimized F Score for fold 0: 0.8035385182454847
