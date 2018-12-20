@@ -80,28 +80,52 @@ def top_feats_by_class(Xtr, y, features, min_tfidf=0.1, top_n=25):
         dfs.append(feats_df)
     return dfs
 
-def process_output(datasets, filename):
-    output = []
+def process_output(satdd, filename, append_str, rig_type='cross'):
+    datasets = satdd.all_dataset_pd.projectname.unique()
+    output = ''
     with open("logs/" + filename, "r") as f:
         for line in f.readlines():
             if "Optimized" in line:
-               output.append(line)
+               output += line + '\n'
 
-    file = open('cross_proj_f_only.txt', 'w')
-    file.write(output)
+    file = open('results/' + append_str + rig_type +'_proj_f_only.txt', 'w')
+    file.write(str(output))
 
+    avg_fs = ''
     for dataset in datasets:
-        output = []
+        output = ''
+        avg_f = 0
         with open("logs/" + filename, "r") as f:
             for line in f.readlines():
                 if dataset in line:
-                    output.append(line)
+                    output += line + '\n'
+                    if "Optimized F Score for fold" in line:
+                        avg_f += float(line.split(":")[3])
 
-        file = open('cross_proj_' + dataset + ".txt", 'w')
-        file.write(output)
+        avg_f = avg_f/5
+        avg_fs += dataset + " " + str(avg_f) + "\n"
 
-#this is on test branch for a three way merge
+        file = open('results/' + append_str + rig_type + '_proj_' + dataset + ".txt", 'w')
+        file.write(str(output))
 
-# testing
-# adding more line in test branch
+    file = open('results/' + append_str + rig_type + '_proj_avg_f.txt', 'w')
+    file.write(str(avg_fs))
 
+
+def compare_with_huang(filename, write_filename):
+    res_dict = {}
+    with open("results/huang_cross_results.txt", "r") as huang:
+        for line in huang.readlines():
+            temp = line.split(" ")
+            res_dict[temp[0]] = temp[1]
+
+    output = 'Project,F,Difference\n'
+    with open(filename, "r") as file:
+        for line in file.readlines():
+            temp = line.split(" ")
+            val = res_dict.get(temp[0])
+            val= round((float(temp[1]) - float(val)),3)
+            output += temp[0] + "," + str(round(float(temp[1]), 3)) + "," + str(val) + "\n"
+
+    f = open(write_filename, "w+")
+    f.write(output)

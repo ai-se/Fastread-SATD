@@ -83,7 +83,21 @@ class DATASET:
             self.csr_mat = tfer.transform(self.data_pd['commenttext'])
         else:
             self.tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
-                                        use_idf=True, max_features=max_f, decode_error="ignore")
+                                        use_idf=True, max_features=None, decode_error="ignore")
+            self.tfer.fit(self.data_pd['commenttext'])
+
+
+            fea_count = len(self.tfer.vocabulary_.keys())
+            fea_count = int(fea_count * max_f)
+
+            self.tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
+                                        use_idf=True, max_features=fea_count, decode_error="ignore")
+
+            self.csr_mat = self.tfer.fit_transform(self.data_pd['commenttext'])
+
+            fea_count = len(self.tfer.vocabulary_.keys())
+            logger.info("New Feature Counts: " + str(fea_count))
+
             self.csr_mat = self.tfer.fit_transform(self.data_pd['commenttext'])
 
 

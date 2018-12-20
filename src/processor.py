@@ -85,6 +85,11 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_
     param_search_space = list(set(param_search_space).difference(set(evaluted_configs)))
 
     f_scores = [measure_fitness(x_train, y_train, x_tune, y_tune, configs) for configs in evaluted_configs]
+
+    # Filtering NaN case
+    evaluted_configs, f_scores = filter_no_info(label, evaluted_configs, f_scores)
+
+
     logger.info(label + " | F Score of init pool: " + str(f_scores))
 
     # hold best values
@@ -100,6 +105,7 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_
     eval = 0
     while this_budget > 0:
         cart_model = DecisionTreeRegressor(random_state=1)
+
         cart_model.fit(evaluted_configs, f_scores)
 
         next_config_id = acquisition_fn(param_search_space, cart_model)
@@ -171,65 +177,13 @@ def calc_f(cmat):
     return f1
 
 
+def filter_no_info(label, evaluated_configs, fscores):
+    for i, score in enumerate(fscores):
+        if np.isnan(score) or score == 0:
+            del evaluated_configs[i]
+            del fscores[i]
+            logger.info(label + "| filtered one: " + str(fscores))
 
-
-# def k_fold_test(data, fold=5):
-#     skfolds = StratifiedKFold(n_splits=fold, random_state=0)
-#     y_vals = data.data_pd.loc[:, 'label']
-#     fold_num = 0
-#     for train_index, tune_index in skfolds.split(data.csr_mat, y_vals):
-#         # Training data
-#         # -------------
-#         x_train_folds = data.csr_mat[train_index]
-#         y_train_folds = y_vals.iloc[train_index]
-#         # Tuning data
-#         # ------------
-#         x_test_folds = data.csr_mat[tune_index]
-#         y_test_folds = y_vals.iloc[tune_index]
-#
-#         k_fold_with_tuning(x_train_folds, y_train_folds, x_test_folds, y_test_folds, fold=FOLD)
-#
-#         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
-#         # -------------------------------------
-#         conf_mat = tune_with_flash(x_train_folds, y_train_folds, x_test_folds, y_test_folds, fold=5)
-#
-# def k_fold_tuning(x_train, y_train, x_test, y_test, fold=FOLD):
-#
-#     skfolds = StratifiedKFold(n_splits=fold, random_state=0)
-#
-#     # This is a list of confusion matrix recieved from each fold.
-#     conf_mat = []
-#
-#     fold_num = 0
-#
-#     for train_index, tune_index in skfolds.split(x_train, y_train):
-#         logger.info("Starting a fold")
-#         # Training data
-#         # -------------
-#         x_train_folds = x_train[train_index]
-#         y_train_folds = y_train.iloc[train_index]
-#          # Tuning data
-#         # ------------
-#         x_tune_folds = x_train[tune_index]
-#         y_tune_folds = y_train.iloc[tune_index]
-#
-#         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
-#         # -------------------------------------
-#         clf = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num)
-#         # clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
-#         # clf.fit(train_data.csr_mat, y_train)
-#         # # run optimized clf on the test data and record the confusion matrix
-#         # -------------------------------------
-#         y_test_pred = clf.predict(y_train)
-#         mat = confusion_matrix(y_test, y_test_pred)
-#         conf_mat.append(mat)
-#         logger.info("Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
-#
-#         fold_num += 1
-#
-#     return conf_mat
-#
-#
-#
+    return evaluated_configs, fscores
 
 
