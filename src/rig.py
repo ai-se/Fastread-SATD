@@ -7,12 +7,12 @@ import logging
 from utility import process_output, compare_with_huang
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename='logs/12_20_18_cross_fea05.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='logs/12_20_18_test.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
 import multiprocessing as mp
 from joblib import Parallel, delayed
 
 
-MAX_FEATURE = .05
+MAX_FEATURE = .5
 STOP_WORDS = "english"
 
 FOLD = 5
@@ -91,7 +91,7 @@ def cross_project(satdd):
 
     num_cpu = mp.cpu_count()
 
-    Parallel(n_jobs=num_cpu)(delayed(run_rig_on_project)(satdd, dataset) for dataset in all_datasets)
+    Parallel(n_jobs=1)(delayed(run_rig_on_project)(satdd, dataset) for dataset in all_datasets)
 
     # for dataset in all_datasets:
     #     if 'apache-ant-1.7.0' in dataset or 'emf-2.4.1' in dataset:
@@ -136,5 +136,7 @@ def run_rig_on_project(satdd, project_name):
 
 
 def make_results(satdd):
-    compare_with_huang("results/12_18_18/cross_proj_avg_f.txt", "results/12_18_18_cross_fea20_stopEng_f.csv")
-    #process_output(satdd, '12_18_18_cross_fea20.log', "12_18_18/")
+    compare_with_huang("results/12_21_18/cross_proj_avg_f.txt", "results/12_21_18_cross_fea30_stopEng_f.csv")
+    #process_output(satdd, '12_21_18_cross_fea30.log', "12_21_18/")
+
+

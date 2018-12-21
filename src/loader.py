@@ -64,7 +64,8 @@ class DATASET:
         self.data_pd = data_pd
         self.true_count = len(data_pd[(data_pd['label'] == 'yes')])
         self.false_count = len(data_pd[(data_pd['label'] == 'no')])
-
+        self.tfer = None
+        self.csr_mat = None
         # THIS ONE IS FOR MANUAL TOKENIZATION
         # tfer = TfidfVectorizer(tokenizer=tokenize, preprocessor=None, lowercase=True, stop_words=None, norm='l2',
         #                        use_idf=True, max_features=MAX_FEATURES, decode_error="ignore")

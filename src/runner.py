@@ -84,7 +84,7 @@ def active_learning(filename, query='', stopat=.95, error='three', interval=1000
 
 
 if __name__ == "__main__":
-    run_rig('td_2016.csv')
+    run_rig('td_2016_tiny.csv')
 
 
     # active_learning('td_2016.csv')

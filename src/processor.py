@@ -1,18 +1,24 @@
 import random
 import time
+from copy import copy
 
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.svm import SVC
+from sklearn.svm import SVC, SVR
 from sklearn.tree import DecisionTreeRegressor
 
 from tuner import TUNER
 import numpy as np
+import pandas
+
+import scipy.sparse as sp
 
 
 import logging
 logger = logging.getLogger(__name__)
+
+BEST_CONF_TEMP = [47.96, 'poly', 0.84, 0.75]
 
 
 def k_fold_with_tuning(test_data, train_data, fold, pool_size, init_pool, budget, label=''):
@@ -52,17 +58,25 @@ def k_fold_with_tuning(test_data, train_data, fold, pool_size, init_pool, budget
 
         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
         # -------------------------------------
-        clf = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num,
+        best_config = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num,
                             pool_size, init_pool, budget, label)
-        # clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
-        # clf.fit(train_data.csr_mat, y_train)
+
+        # Prior to active learning
+        clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
+        clf.fit(x_train_folds, y_train_folds)
         # # run optimized clf on the test data and record the confusion matrix
         # -------------------------------------
         y_test_pred = clf.predict(test_data.csr_mat)
         mat = confusion_matrix(y_test, y_test_pred)
+        logger.info(label + " | Before Active Learning Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
+
+        # active learning
+        mat = active_learning(best_config, x_train_folds, y_train_folds, test_data.csr_mat, y_test)
+
+
         conf_mat.append(mat)
-        clfs.append(clf)
-        logger.info(label + " | Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
+        #clfs.append(clf)
+        logger.info(label + " | After Active Learning Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
 
         fold_num += 1
 
@@ -110,15 +124,19 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_
 
         next_config_id = acquisition_fn(param_search_space, cart_model)
         next_config = param_search_space.pop(next_config_id)
+
+        next_config_normal = (next_config[0], tuner.label_reverse_transform(next_config[1]), next_config[2], next_config[3])
+
+        next_f = measure_fitness(x_train, y_train, x_tune, y_tune, next_config_normal)
+
+        if np.isnan(next_f) or next_f == 0:
+            continue
+
+        f_scores.append(next_f)
         evaluted_configs.append(next_config)
 
-        next_config = (next_config[0], tuner.label_reverse_transform(next_config[1]), next_config[2], next_config[3])
-
-        next_f = measure_fitness(x_train, y_train, x_tune, y_tune, next_config)
-        f_scores.append(next_f)
-
         if isBetter(next_f, best_f):
-            best_config = next_config
+            best_config = next_config_normal
             best_f = next_f
             this_budget += 1
             logger.info(label + " | new F: " + str(best_f) + " budget " + str(this_budget))
@@ -127,10 +145,12 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_
 
     logger.info(label+ " | Eval: " + str(eval))
 
-    clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
-    clf.fit(x_train, y_train)
 
-    return clf
+    # Going to return Config so that I can use SVR on the outside
+    # clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
+    # clf.fit(x_train, y_train)
+
+    return best_config
 
 
 def acquisition_fn(search_space, cart_model):
@@ -187,3 +207,77 @@ def filter_no_info(label, evaluated_configs, fscores):
     return evaluated_configs, fscores
 
 
+def active_learning(best_config, x_train_folds, y_train_folds, x_test, y_test):
+    y_train_folds = y_train_folds.replace('yes', 1.0)
+    y_train_folds = y_train_folds.replace('no', -1.0)
+
+    clf = SVR(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3])
+    clf.fit(x_train_folds, y_train_folds)
+    # # run optimized clf on the test data and record the confusion matrix
+    # -------------------------------------
+    y_test_pred = clf.predict(x_test)
+
+    y_test_pred2 = np.where(y_test_pred > .5, 'yes', (np.where(y_test_pred > -.5, 'undefined', 'no')))
+
+    ids = np.argwhere(y_test_pred2=='undefined')
+    ids = ids.reshape(-1)
+    rand_ids = np.random.choice(ids, 20)
+
+    x_train_folds = sp.vstack((x_train_folds, x_test[rand_ids]))
+    y_train_folds = pandas.concat((y_train_folds, y_test[rand_ids]))
+
+
+
+
+
+    y_train_folds = y_train_folds.replace('yes', 1.0)
+    y_train_folds = y_train_folds.replace('no', -1.0)
+
+    clf = SVR(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3])
+    clf.fit(x_train_folds, y_train_folds)
+    # # run optimized clf on the test data and record the confusion matrix
+    # -------------------------------------
+    y_test_pred = clf.predict(x_test)
+
+    y_test_pred2 = np.where(y_test_pred > .5, 'yes', (np.where(y_test_pred > -.5, 'undefined', 'no')))
+
+    ids = np.argwhere(y_test_pred2 == 'undefined')
+    ids = ids.reshape(-1)
+    rand_ids = np.random.choice(ids, 20)
+
+    x_train_folds = sp.vstack((x_train_folds, x_test[rand_ids]))
+    y_train_folds = pandas.concat((y_train_folds, y_test[rand_ids]))
+
+
+
+
+    y_train_folds = y_train_folds.replace('yes', 1.0)
+    y_train_folds = y_train_folds.replace('no', -1.0)
+
+    clf = SVR(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3])
+    clf.fit(x_train_folds, y_train_folds)
+    # # run optimized clf on the test data and record the confusion matrix
+    # -------------------------------------
+    y_test_pred = clf.predict(x_test)
+
+    y_test_pred2 = np.where(y_test_pred > .5, 'yes', (np.where(y_test_pred > -.5, 'undefined', 'no')))
+
+    ids = np.argwhere(y_test_pred2 == 'undefined')
+    ids = ids.reshape(-1)
+    rand_ids = np.random.choice(ids, 20)
+
+    x_train_folds = sp.vstack((x_train_folds, x_test[rand_ids]))
+    y_train_folds = pandas.concat((y_train_folds, y_test[rand_ids]))
+
+
+
+
+    y_train_folds = y_train_folds.replace(1.0, 'yes')
+    y_train_folds = y_train_folds.replace(-1.0, 'no')
+
+    clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
+    clf.fit(x_train_folds, y_train_folds)
+    y_test_pred = clf.predict(x_test)
+    mat = confusion_matrix(y_test, y_test_pred)
+    print(calc_f(mat))
+    return mat
