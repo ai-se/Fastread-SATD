@@ -1,0 +1,100 @@
+2018-12-11 14:39:29,530 argouml | Optimized F Score for fold 0: 0.815779949330438
+
+2018-12-11 14:49:14,586 jEdit-4.2 | Optimized F Score for fold 0: 0.3354037267080745
+
+2018-12-11 14:57:58,306 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 0: 0.8076923076923076
+
+2018-12-11 15:01:14,345 jfreechart-1.0.19 | Optimized F Score for fold 0: 0.5842696629213483
+
+2018-12-11 15:01:24,471 columba-1.4-src | Optimized F Score for fold 0: 0.8728179551122195
+
+2018-12-11 15:07:14,774 apache-jmeter-2.10 | Optimized F Score for fold 0: 0.7577464788732395
+
+2018-12-11 15:12:42,417 apache-ant-1.7.0 | Optimized F Score for fold 0: 0.4000000000000001
+
+2018-12-11 15:13:36,721 emf-2.4.1 | Optimized F Score for fold 0: 0.48407643312101917
+
+2018-12-11 15:19:50,563 argouml | Optimized F Score for fold 1: 0.8227986846912678
+
+2018-12-11 15:46:23,164 jEdit-4.2 | Optimized F Score for fold 1: 0.31347962382445144
+
+2018-12-11 15:55:00,602 argouml | Optimized F Score for fold 2: 0.8204379562043795
+
+2018-12-11 16:03:28,366 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 1: 0.8146341463414634
+
+2018-12-11 16:08:54,437 jfreechart-1.0.19 | Optimized F Score for fold 1: 0.5753424657534247
+
+2018-12-11 16:10:40,263 columba-1.4-src | Optimized F Score for fold 1: 0.7937219730941703
+
+2018-12-11 16:16:24,002 apache-jmeter-2.10 | Optimized F Score for fold 1: 0.7550432276657061
+
+2018-12-11 16:32:34,358 apache-ant-1.7.0 | Optimized F Score for fold 1: 0.39999999999999997
+
+2018-12-11 16:35:39,713 jEdit-4.2 | Optimized F Score for fold 2: 0.34567901234567905
+
+2018-12-11 16:38:07,505 emf-2.4.1 | Optimized F Score for fold 1: 0.48750000000000004
+
+2018-12-11 16:55:54,987 argouml | Optimized F Score for fold 3: 0.8260869565217391
+
+2018-12-11 17:03:40,610 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 2: 0.8107448107448108
+
+2018-12-11 17:06:40,700 jfreechart-1.0.19 | Optimized F Score for fold 2: 0.5738636363636364
+
+2018-12-11 17:16:28,053 columba-1.4-src | Optimized F Score for fold 2: 0.858560794044665
+
+2018-12-11 17:25:36,919 apache-jmeter-2.10 | Optimized F Score for fold 2: 0.7569141193595342
+
+2018-12-11 17:39:45,193 jEdit-4.2 | Optimized F Score for fold 3: 0.3597560975609756
+
+2018-12-11 17:46:19,556 argouml | Optimized F Score for fold 4: 0.842443729903537
+
+2018-12-11 17:47:20,533 apache-ant-1.7.0 | Optimized F Score for fold 2: 0.39593908629441626
+
+2018-12-11 18:00:01,095 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 3: 0.8116646415552855
+
+2018-12-11 18:04:33,360 emf-2.4.1 | Optimized F Score for fold 2: 0.4691358024691357
+
+2018-12-11 18:15:52,042 jfreechart-1.0.19 | Optimized F Score for fold 3: 0.580281690140845
+
+2018-12-11 18:15:56,683 apache-jmeter-2.10 | Optimized F Score for fold 3: 0.7619047619047619
+
+2018-12-11 18:21:06,898 columba-1.4-src | Optimized F Score for fold 3: 0.8686868686868686
+
+2018-12-11 18:30:48,649 jruby-1.4.0 | Optimized F Score for fold 0: 0.8481123792800702
+
+2018-12-11 18:41:29,185 jEdit-4.2 | Optimized F Score for fold 4: 0.31927710843373497
+
+2018-12-11 18:56:02,456 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 4: 0.802439024390244
+
+2018-12-11 19:01:22,574 apache-ant-1.7.0 | Optimized F Score for fold 3: 0.36363636363636365
+
+2018-12-11 19:11:03,346 apache-jmeter-2.10 | Optimized F Score for fold 4: 0.7660818713450293
+
+2018-12-11 19:13:29,702 emf-2.4.1 | Optimized F Score for fold 3: 0.4743589743589744
+
+2018-12-11 19:16:38,295 columba-1.4-src | Optimized F Score for fold 4: 0.7855530474040633
+
+2018-12-11 19:22:08,518 jfreechart-1.0.19 | Optimized F Score for fold 4: 0.5619834710743802
+
+2018-12-11 19:22:42,101 sql12 | Optimized F Score for fold 0: 0.6666666666666667
+
+2018-12-11 19:32:54,809 jruby-1.4.0 | Optimized F Score for fold 1: 0.8362369337979093
+
+2018-12-11 19:53:55,723 apache-ant-1.7.0 | Optimized F Score for fold 4: 0.3937823834196891
+
+2018-12-11 20:03:12,610 emf-2.4.1 | Optimized F Score for fold 4: 0.4743589743589744
+
+2018-12-11 20:03:15,581 sql12 | Optimized F Score for fold 1: 0.6578366445916114
+
+2018-12-11 20:11:13,814 jruby-1.4.0 | Optimized F Score for fold 2: 0.7553398058252426
+
+2018-12-11 20:31:17,844 sql12 | Optimized F Score for fold 2: 0.6414253897550112
+
+2018-12-11 20:39:22,784 jruby-1.4.0 | Optimized F Score for fold 3: 0.8351063829787235
+
+2018-12-11 20:55:04,819 sql12 | Optimized F Score for fold 3: 0.6075388026607539
+
+2018-12-11 21:09:44,988 jruby-1.4.0 | Optimized F Score for fold 4: 0.8628127696289905
+
+2018-12-11 21:20:39,050 sql12 | Optimized F Score for fold 4: 0.658008658008658
+

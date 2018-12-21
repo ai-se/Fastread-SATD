@@ -1,0 +1,66 @@
+2018-12-12 00:20:21,244 DATASET: hibernate-distribution-3.3.2.GA | MAX_FEATURE: None | STOP_WORDS: english | FOLD: 5 | POOL_SIZE: 100000 | INIT_POOL: 10 | BUDGET: 10
+
+2018-12-12 00:20:21,245 hibernate-distribution-3.3.2.GA | Starting our 5 fold cross validation for hibernate-distribution-3.3.2.GA
+
+2018-12-12 00:20:21,447 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 00:43:49,032 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.770764119601329, 0.5103349964362082, 0.5313868613138687, 0.7518923465096718, 0.5265866209262436, 0.7443419949706621, 0.7231543624161073, 0.5457249070631971, 0.7539882451721243, 0.6499162479061976]
+
+2018-12-12 01:19:16,129 hibernate-distribution-3.3.2.GA | Eval: 10
+
+2018-12-12 01:21:47,630 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 0: 0.8112058465286236
+
+2018-12-12 01:21:47,630 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 01:48:09,523 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.6544310435238595, 0.5536332179930796, 0.5789473684210527, 0.8175633889919603, 0.8186335403726708, 0.6161342717920952, 0.5893129770992367, 0.8167797655768044, 0.7686046511627906, 0.8033775633293124]
+
+2018-12-12 01:53:15,500 hibernate-distribution-3.3.2.GA | new F: 0.8188585607940447 budget 11
+
+2018-12-12 02:14:55,338 hibernate-distribution-3.3.2.GA | new F: 0.8194878201124297 budget 7
+
+2018-12-12 02:41:06,421 hibernate-distribution-3.3.2.GA | Eval: 12
+
+2018-12-12 02:46:37,255 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 1: 0.7990255785627284
+
+2018-12-12 02:46:37,256 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 03:31:10,697 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.5611156685808039, 0.7906614785992219, 0.8219607843137254, 0.4735729386892178, 0.4321389793702498, 0.803125, 0.7946916471506635, 0.8259172521467603, 0.6002886002886003, 0.5571227080394922]
+
+2018-12-12 04:10:35,882 hibernate-distribution-3.3.2.GA | Eval: 10
+
+2018-12-12 04:14:30,679 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 2: 0.8053855569155447
+
+2018-12-12 04:14:30,680 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 04:54:42,931 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.6010830324909747, 0.5509433962264151, 0.5160038797284191, 0.6064981949458483, 0.5115452930728243, 0.572463768115942, 0.49116607773851595, 0.5730232558139534, 0.49848024316109424, 0.49849246231155775]
+
+2018-12-12 04:57:50,027 hibernate-distribution-3.3.2.GA | new F: 0.6077547339945898 budget 11
+
+2018-12-12 05:01:42,048 hibernate-distribution-3.3.2.GA | new F: 0.6084608460846084 budget 10
+
+2018-12-12 05:18:34,954 hibernate-distribution-3.3.2.GA | new F: 0.6109613656783468 budget 6
+
+2018-12-12 05:21:29,404 hibernate-distribution-3.3.2.GA | new F: 0.6198198198198198 budget 5
+
+2018-12-12 05:28:26,887 hibernate-distribution-3.3.2.GA | Eval: 14
+
+2018-12-12 05:30:09,919 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 3: 0.8049079754601227
+
+2018-12-12 05:30:09,920 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 06:09:34,209 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.7492211838006231, 0.7409126063418408, 0.7614533965244866, 0.559774964838256, 0.6541353383458647, 0.24489795918367344, 0.7478532396565183, 0.5925925925925926, 0.7272727272727273, 0.7571428571428571]
+
+2018-12-12 06:13:18,806 hibernate-distribution-3.3.2.GA | new F: 0.7680250783699061 budget 11
+
+2018-12-12 06:55:46,390 hibernate-distribution-3.3.2.GA | Eval: 11
+
+2018-12-12 06:58:41,535 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 4: 0.7985347985347985
+
+2018-12-12 08:59:26,410 DATASET: hibernate-distribution-3.3.2.GA | MAX_FEATURE: None | STOP_WORDS: english | FOLD: 5 | POOL_SIZE: 100000 | INIT_POOL: 10 | BUDGET: 10
+
+2018-12-12 08:59:26,410 hibernate-distribution-3.3.2.GA | Starting our 5 fold cross validation for hibernate-distribution-3.3.2.GA
+
+2018-12-12 08:59:26,613 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 09:21:29,765 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.770764119601329, 0.5103349964362082, 0.5313868613138687, 0.7518923465096718, 0.5265866209262436, 0.7443419949706621, 0.7231543624161073, 0.5457249070631971, 0.7539882451721243, 0.6499162479061976]
+

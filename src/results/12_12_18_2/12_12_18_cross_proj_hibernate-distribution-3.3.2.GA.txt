@@ -1,0 +1,10 @@
+2018-12-12 11:24:55,588 DATASET: hibernate-distribution-3.3.2.GA | MAX_FEATURE: 1000 | STOP_WORDS: english | FOLD: 5 | POOL_SIZE: 100000 | INIT_POOL: 10 | BUDGET: 10
+
+2018-12-12 11:24:55,589 hibernate-distribution-3.3.2.GA | Starting our 5 fold cross validation for hibernate-distribution-3.3.2.GA
+
+2018-12-12 11:24:55,774 hibernate-distribution-3.3.2.GA | Starting a fold
+
+2018-12-12 11:44:20,526 hibernate-distribution-3.3.2.GA | F Score of init pool: [0.7611940298507462, 0.5697924123120973, 0.5802650957290133, 0.7451612903225807, 0.7177482408131353, 0.7540716612377851, 0.7554129911788293, 0.584319526627219, 0.7395498392282958, 0.7415553809897879]
+
+2018-12-12 11:49:17,897 hibernate-distribution-3.3.2.GA | new F: 0.7797716150081566 budget 10
+

@@ -1,0 +1,78 @@
+2018-12-12 11:53:43,891 argouml | Optimized F Score for fold 0: 0.8475415634948709
+
+2018-12-12 12:02:14,337 jEdit-4.2 | Optimized F Score for fold 0: 0.24000000000000002
+
+2018-12-12 12:03:57,724 emf-2.4.1 | Optimized F Score for fold 0: 0.4313725490196078
+
+2018-12-12 12:05:30,164 columba-1.4-src | Optimized F Score for fold 0: 0.8786407766990291
+
+2018-12-12 12:07:39,777 apache-jmeter-2.10 | Optimized F Score for fold 0: 0.7884322678843226
+
+2018-12-12 12:12:32,886 apache-ant-1.7.0 | Optimized F Score for fold 0: 0.3536585365853659
+
+2018-12-12 12:33:34,632 argouml | Optimized F Score for fold 1: 0.833274084607181
+
+2018-12-12 12:33:48,071 jruby-1.4.0 | Optimized F Score for fold 0: 0.8793248945147678
+
+2018-12-12 12:37:25,487 sql12 | Optimized F Score for fold 0: 0.6230936819172114
+
+2018-12-12 12:57:31,138 jEdit-4.2 | Optimized F Score for fold 1: 0.28846153846153844
+
+2018-12-12 13:02:32,443 argouml | Optimized F Score for fold 2: 0.8440042447824548
+
+2018-12-12 13:12:05,746 columba-1.4-src | Optimized F Score for fold 1: 0.8819277108433735
+
+2018-12-12 13:12:34,717 emf-2.4.1 | Optimized F Score for fold 1: 0.4358974358974359
+
+2018-12-12 13:13:35,647 apache-jmeter-2.10 | Optimized F Score for fold 1: 0.7441860465116279
+
+2018-12-12 13:21:51,289 apache-ant-1.7.0 | Optimized F Score for fold 1: 0.36144578313253006
+
+2018-12-12 13:34:40,234 sql12 | Optimized F Score for fold 1: 0.6473029045643153
+
+2018-12-12 13:38:16,281 jEdit-4.2 | Optimized F Score for fold 2: 0.30434782608695654
+
+2018-12-12 13:40:40,212 jruby-1.4.0 | Optimized F Score for fold 1: 0.8896265560165975
+
+2018-12-12 13:47:19,054 argouml | Optimized F Score for fold 3: 0.8396729470316388
+
+2018-12-12 13:48:27,106 apache-jmeter-2.10 | Optimized F Score for fold 2: 0.7576197387518143
+
+2018-12-12 13:52:35,607 columba-1.4-src | Optimized F Score for fold 2: 0.8910891089108911
+
+2018-12-12 13:54:35,450 emf-2.4.1 | Optimized F Score for fold 2: 0.42105263157894735
+
+2018-12-12 14:00:30,067 apache-ant-1.7.0 | Optimized F Score for fold 2: 0.3536585365853659
+
+2018-12-12 14:12:57,112 sql12 | Optimized F Score for fold 2: 0.6255506607929515
+
+2018-12-12 14:17:20,047 jruby-1.4.0 | Optimized F Score for fold 2: 0.90311986863711
+
+2018-12-12 14:17:29,143 jEdit-4.2 | Optimized F Score for fold 3: 0.2792207792207792
+
+2018-12-12 14:24:20,918 argouml | Optimized F Score for fold 4: 0.841094916459296
+
+2018-12-12 14:31:57,515 columba-1.4-src | Optimized F Score for fold 3: 0.8798076923076924
+
+2018-12-12 14:33:12,235 apache-jmeter-2.10 | Optimized F Score for fold 3: 0.7839771101573677
+
+2018-12-12 14:36:15,162 emf-2.4.1 | Optimized F Score for fold 3: 0.43421052631578944
+
+2018-12-12 14:38:07,012 apache-ant-1.7.0 | Optimized F Score for fold 3: 0.3536585365853659
+
+2018-12-12 14:46:57,747 sql12 | Optimized F Score for fold 3: 0.612691466083151
+
+2018-12-12 14:47:34,698 jruby-1.4.0 | Optimized F Score for fold 3: 0.8827470686767169
+
+2018-12-12 15:00:17,843 jEdit-4.2 | Optimized F Score for fold 4: 0.28846153846153844
+
+2018-12-12 15:10:41,952 emf-2.4.1 | Optimized F Score for fold 4: 0.43421052631578944
+
+2018-12-12 15:12:28,430 apache-jmeter-2.10 | Optimized F Score for fold 4: 0.7738998482549316
+
+2018-12-12 15:23:27,006 columba-1.4-src | Optimized F Score for fold 4: 0.8910411622276029
+
+2018-12-12 15:25:31,825 jruby-1.4.0 | Optimized F Score for fold 4: 0.8795379537953796
+
+2018-12-12 15:26:02,974 apache-ant-1.7.0 | Optimized F Score for fold 4: 0.36686390532544383
+

@@ -1,0 +1,100 @@
+2018-12-18 12:14:04,002 argouml | Optimized F Score for fold 0: 0.8042600073448403
+
+2018-12-18 12:23:21,456 apache-jmeter-2.10 | Optimized F Score for fold 0: 0.7612156295224312
+
+2018-12-18 12:24:55,803 sql12 | Optimized F Score for fold 0: 0.631578947368421
+
+2018-12-18 12:26:55,110 jruby-1.4.0 | Optimized F Score for fold 0: 0.8502164502164502
+
+2018-12-18 12:27:29,296 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 0: 0.8078335373317014
+
+2018-12-18 12:28:27,766 emf-2.4.1 | Optimized F Score for fold 0: 0.48101265822784806
+
+2018-12-18 12:29:22,360 jEdit-4.2 | Optimized F Score for fold 0: 0.34355828220858897
+
+2018-12-18 12:29:46,586 apache-ant-1.7.0 | Optimized F Score for fold 0: 0.4134078212290503
+
+2018-12-18 12:30:58,606 columba-1.4-src | Optimized F Score for fold 0: 0.8693467336683417
+
+2018-12-18 12:32:36,810 jfreechart-1.0.19 | Optimized F Score for fold 0: 0.5722379603399433
+
+2018-12-18 12:44:08,935 argouml | Optimized F Score for fold 1: 0.8195266272189349
+
+2018-12-18 12:58:27,659 sql12 | Optimized F Score for fold 1: 0.6279569892473118
+
+2018-12-18 13:04:35,316 argouml | Optimized F Score for fold 2: 0.8147337709700948
+
+2018-12-18 13:05:55,853 apache-jmeter-2.10 | Optimized F Score for fold 1: 0.7737226277372262
+
+2018-12-18 13:08:21,405 jEdit-4.2 | Optimized F Score for fold 1: 0.36950146627565983
+
+2018-12-18 13:08:29,579 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 1: 0.8073170731707319
+
+2018-12-18 13:11:25,529 emf-2.4.1 | Optimized F Score for fold 1: 0.4720496894409938
+
+2018-12-18 13:12:23,307 jruby-1.4.0 | Optimized F Score for fold 1: 0.8756388415672914
+
+2018-12-18 13:12:28,042 columba-1.4-src | Optimized F Score for fold 1: 0.8762376237623763
+
+2018-12-18 13:15:00,342 apache-ant-1.7.0 | Optimized F Score for fold 1: 0.40625
+
+2018-12-18 13:22:44,895 jfreechart-1.0.19 | Optimized F Score for fold 1: 0.5853658536585367
+
+2018-12-18 13:25:06,562 sql12 | Optimized F Score for fold 2: 0.6053811659192825
+
+2018-12-18 13:35:26,733 jEdit-4.2 | Optimized F Score for fold 2: 0.35692307692307695
+
+2018-12-18 13:39:07,173 apache-jmeter-2.10 | Optimized F Score for fold 2: 0.7628865979381443
+
+2018-12-18 13:43:47,617 argouml | Optimized F Score for fold 3: 0.8249630723781389
+
+2018-12-18 13:44:26,017 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 2: 0.8029197080291972
+
+2018-12-18 13:45:58,264 jruby-1.4.0 | Optimized F Score for fold 2: 0.8590947907771136
+
+2018-12-18 13:47:15,364 emf-2.4.1 | Optimized F Score for fold 2: 0.45569620253164556
+
+2018-12-18 13:47:31,965 apache-ant-1.7.0 | Optimized F Score for fold 2: 0.3508771929824562
+
+2018-12-18 13:50:13,390 columba-1.4-src | Optimized F Score for fold 2: 0.8797953964194374
+
+2018-12-18 13:54:07,729 sql12 | Optimized F Score for fold 3: 0.6267281105990784
+
+2018-12-18 13:57:38,132 jfreechart-1.0.19 | Optimized F Score for fold 2: 0.5673352435530086
+
+2018-12-18 14:10:28,047 apache-jmeter-2.10 | Optimized F Score for fold 3: 0.7638483965014577
+
+2018-12-18 14:10:28,163 jEdit-4.2 | Optimized F Score for fold 3: 0.37724550898203596
+
+2018-12-18 14:11:12,112 argouml | Optimized F Score for fold 4: 0.8180167090446786
+
+2018-12-18 14:21:40,601 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 3: 0.800982800982801
+
+2018-12-18 14:24:17,855 jruby-1.4.0 | Optimized F Score for fold 3: 0.8691910499139415
+
+2018-12-18 14:26:58,513 columba-1.4-src | Optimized F Score for fold 3: 0.8827930174563591
+
+2018-12-18 14:29:06,955 emf-2.4.1 | Optimized F Score for fold 3: 0.44303797468354433
+
+2018-12-18 14:29:11,722 jfreechart-1.0.19 | Optimized F Score for fold 3: 0.5657142857142857
+
+2018-12-18 14:33:05,912 apache-ant-1.7.0 | Optimized F Score for fold 3: 0.3240223463687151
+
+2018-12-18 14:40:16,052 sql12 | Optimized F Score for fold 4: 0.6505494505494506
+
+2018-12-18 14:43:19,183 jEdit-4.2 | Optimized F Score for fold 4: 0.3271604938271605
+
+2018-12-18 14:53:28,695 apache-jmeter-2.10 | Optimized F Score for fold 4: 0.7485714285714286
+
+2018-12-18 14:56:42,400 jruby-1.4.0 | Optimized F Score for fold 4: 0.8591184096802075
+
+2018-12-18 14:58:36,876 hibernate-distribution-3.3.2.GA | Optimized F Score for fold 4: 0.8004926108374384
+
+2018-12-18 15:07:49,637 apache-ant-1.7.0 | Optimized F Score for fold 4: 0.3888888888888889
+
+2018-12-18 15:09:51,536 emf-2.4.1 | Optimized F Score for fold 4: 0.4585987261146497
+
+2018-12-18 15:10:35,451 columba-1.4-src | Optimized F Score for fold 4: 0.7785234899328859
+
+2018-12-18 15:16:12,342 jfreechart-1.0.19 | Optimized F Score for fold 4: 0.5533141210374639
+
