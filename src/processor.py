@@ -8,6 +8,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.svm import SVC, SVR
 from sklearn.tree import DecisionTreeRegressor
 
+from act_learn import fastread
 from tuner import TUNER
 import numpy as np
 import pandas
@@ -58,12 +59,18 @@ def k_fold_with_tuning(test_data, train_data, fold, pool_size, init_pool, budget
 
         # Tune with FLASH over train and tune dataset and return the optimized clf that is already fitted
         # -------------------------------------
-        best_config = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num,
-                            pool_size, init_pool, budget, label)
+        # TODO TESTING ACTIVE LEARNING, So, using a custom HARD CODED best_config
+        # best_config = tune_with_flash(x_train_folds, y_train_folds, x_tune_folds, y_tune_folds, fold_num,
+        #                     pool_size, init_pool, budget, label)
 
-        # Prior to active learning
-        clf = SVC(C=best_config[0], kernel=best_config[1], gamma=best_config[2], coef0=best_config[3], random_state=0)
-        clf.fit(x_train_folds, y_train_folds)
+        # Prior to active learning WITH PROBABILITY TURNED TRUE FOR ACTIVE LEARNING
+        clf = SVC(C=BEST_CONF_TEMP[0], kernel=BEST_CONF_TEMP[1], gamma=BEST_CONF_TEMP[2], coef0=BEST_CONF_TEMP[3],
+                  probability=True, random_state=0)
+
+
+        # Testing active learning now
+        fastread(clf, test_data, x_train_folds, y_train_folds)
+
         # # run optimized clf on the test data and record the confusion matrix
         # -------------------------------------
         y_test_pred = clf.predict(test_data.csr_mat)
@@ -71,7 +78,7 @@ def k_fold_with_tuning(test_data, train_data, fold, pool_size, init_pool, budget
         logger.info(label + " | Before Active Learning Optimized F Score for fold " + str(fold_num) + ": " + str(calc_f(mat)))
 
         # active learning
-        mat = active_learning(best_config, x_train_folds, y_train_folds, test_data.csr_mat, y_test)
+        # mat = active_learning(best_config, x_train_folds, y_train_folds, test_data.csr_mat, y_test)
 
 
         conf_mat.append(mat)

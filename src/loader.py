@@ -61,6 +61,7 @@ class SATDD:
 
 class DATASET:
     def __init__(self, data_pd):
+        data_pd.index = range(len(data_pd))
         self.data_pd = data_pd
         self.true_count = len(data_pd[(data_pd['label'] == 'yes')])
         self.false_count = len(data_pd[(data_pd['label'] == 'no')])
@@ -83,12 +84,12 @@ class DATASET:
             self.tfer = tfer
             self.csr_mat = tfer.transform(self.data_pd['commenttext'])
         else:
-            self.tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
+            tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
                                         use_idf=True, max_features=None, decode_error="ignore")
-            self.tfer.fit(self.data_pd['commenttext'])
+            tfer.fit(self.data_pd['commenttext'])
 
 
-            fea_count = len(self.tfer.vocabulary_.keys())
+            fea_count = len(tfer.vocabulary_.keys())
             fea_count = int(fea_count * max_f)
 
             self.tfer = TfidfVectorizer(lowercase=True, stop_words=stop_w, norm='l2',
@@ -98,8 +99,6 @@ class DATASET:
 
             fea_count = len(self.tfer.vocabulary_.keys())
             logger.info("New Feature Counts: " + str(fea_count))
-
-            self.csr_mat = self.tfer.fit_transform(self.data_pd['commenttext'])
 
 
 

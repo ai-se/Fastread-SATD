@@ -125,7 +125,7 @@ def compare_with_huang(filename, write_filename):
             temp = line.split(" ")
             val = res_dict.get(temp[0])
             val= round((float(temp[1]) - float(val)),3)
-            output += temp[0] + "," + str(round(float(temp[1]), 3)) + "," + str(val) + "\n"
+            output += temp[0] + "," + str(round(float(temp[1]) * 100, 2)) + "," + str(round(val * 100, 2)) + "\n"
 
     f = open(write_filename, "w+")
     f.write(output)
