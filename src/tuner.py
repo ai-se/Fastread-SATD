@@ -3,7 +3,7 @@ import random
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 
-class TUNER:
+class SVM_TUNER:
     def __init__(self, fold_num=0):
         self.C_VALS = [1, 50]
         self.KERNELS = ['rbf', 'linear', 'sigmoid', 'poly']

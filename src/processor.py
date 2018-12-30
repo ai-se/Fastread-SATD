@@ -9,7 +9,7 @@ from sklearn.svm import SVC, SVR
 from sklearn.tree import DecisionTreeRegressor
 
 from act_learn import fastread
-from tuner import TUNER
+from tuner import SVM_TUNER
 import numpy as np
 import pandas
 
@@ -94,7 +94,7 @@ def tune_with_flash(x_train, y_train, x_tune, y_tune, fold_num, pool_size, init_
     import warnings
     warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-    tuner = TUNER(fold_num)
+    tuner = SVM_TUNER(fold_num)
     random.seed(fold_num)
     this_budget = budget
 

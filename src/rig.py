@@ -1,6 +1,8 @@
+import pandas
+
 from sklearn.model_selection import train_test_split
 
-from ensemble import ensemble_vote
+from ensemble import ensemble_vote, classify
 from loader import SATDD, DATASET
 from processor import k_fold_with_tuning
 import logging
@@ -8,13 +10,15 @@ import logging
 from utility import process_output, compare_with_huang
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename='logs/12_27_18_test.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='logs/12_30_18_fea20_stopNone.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
 import multiprocessing as mp
 from joblib import Parallel, delayed
+import numpy as np
+import scipy.sparse as sp
 
 
-MAX_FEATURE = 1
-STOP_WORDS = "english"
+MAX_FEATURE = .2
+STOP_WORDS = None
 
 FOLD = 5
 POOL_SIZE = 100000
@@ -132,6 +136,30 @@ def run_rig_on_project(satdd, project_name):
     # need to give the tfidf from training set, will just use transform to create csr_matrix
     test_data.set_csr_mat(max_f=MAX_FEATURE, stop_w=STOP_WORDS, tfer=training_data.tfer)
 
+
+
+    x_train = training_data.csr_mat
+    y_train = training_data.data_pd.loc[:, 'label']
+    data_pd = pandas.DataFrame.from_csv('apache-ant-1.7.0_data_pd.csv')
+
+    pos_ids = np.where(data_pd.svm_pred_proba > .9)[0]
+
+    x_new = test_data.csr_mat[pos_ids]
+    y_new = data_pd.loc[pos_ids, 'label']
+
+    aa = x_train.todense()
+    ass = x_train.toarray()
+    x = sp.vstack([x_train, x_new])
+    ass = x.toarray()
+
+    bb = x.todense()
+    y = y_train.append(y_new)
+
+
+
+
+
+
     # Logging rig descriptions
     logger.info("\n===============")
     logger.info("DATASET: " + project_name + " | MAX_FEATURE: " + str(MAX_FEATURE) + " | STOP_WORDS: " + str(STOP_WORDS)
@@ -149,7 +177,7 @@ def run_rig_on_project(satdd, project_name):
 
 
     # NEW ENSAMBLE VOTING
-    ensemble_vote(training_data, test_data, project_name, satdd.all_dataset_pd.projectname.unique())
+    classify(training_data, test_data, project_name, satdd.all_dataset_pd.projectname.unique())
 
     print(project_name + " is DONE")
 
