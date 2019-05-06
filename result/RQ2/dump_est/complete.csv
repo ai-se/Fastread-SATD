@@ -1,0 +1,11 @@
+,est_dt,est_lr,est_nbm,est_svm_linear
+apache-ant-1.7.0.csv,104.0,256.0,104.0,104.0
+apache-jmeter-2.10.csv,286.0,256.0,104.0,286.0
+argouml.csv,256.0,256.0,104.0,256.0
+columba-1.4-src.csv,286.0,256.0,104.0,286.0
+emf-2.4.1.csv,209.0,256.0,131.0,209.0
+hibernate-distribution-3.3.2.GA.csv,131.0,204.0,104.0,131.0
+jEdit-4.2.csv,1413.0,1413.0,104.0,1413.0
+jfreechart-1.0.19.csv,104.0,256.0,104.0,104.0
+jruby-1.4.0.csv,209.0,256.0,104.0,209.0
+sql12.csv,204.0,256.0,104.0,204.0
