@@ -86,8 +86,8 @@ def Supervised(filename, old_files = [], stop='', stopat=1, error='none', interv
     read.seed = seed
 
     if boost:
-        util.vote(read, clf_name=boost, seed=seed)
-
+        util.vote(read, clf_name=boost, seed=seed, all=False, temp=str(seed) + filename)
+    return
     num2 = read.get_allpos()
     target = int(num2 * stopat)
     if stop == 'est':
@@ -108,6 +108,7 @@ def Supervised(filename, old_files = [], stop='', stopat=1, error='none', interv
 
     while True:
         pos, neg, total = read.get_numbers()
+
         # try:
         #     print("%d, %d, %d" %(pos,pos+neg, read.est_num))
         # except:
@@ -368,7 +369,7 @@ def metrics(read, results, treatment, cost=0):
 
 ### exp
 
-def exp_HPC(i , repeat=1, learner='nbm', boost=None, train_project=None, input = '../data/', dest_path='../dump/'):
+def exp_HPC(i , repeat=1, learner='nbm', boost=None, train_project=None, input = '../data/', dest_path='../temp/'):
     ori_files = listdir(input)
     file = ori_files[i]
     ori_files.remove(file)
@@ -384,13 +385,15 @@ def exp_HPC(i , repeat=1, learner='nbm', boost=None, train_project=None, input =
             files = random.sample(files, train_project)
             print(files)
         read = Supervised(file, files, learner=learner, seed=repeat_counter, boost=boost, stop='est', stopat=.9)
+        continue
         pos = Counter(read.body['label'][:read.newpart])['yes']
         total = read.newpart
 
         results['true'] = [pos, total]
         results['supervised' + str(repeat_counter)] = read.record
-        thres = Counter(read.clf.predict(read.csr_mat[:read.newpart]))['yes']
-        results['supervised' + str(repeat_counter)]['thres'] = thres
+        if boost==None:
+            thres = Counter(read.clf.predict(read.csr_mat[:read.newpart]))['yes']
+            results['supervised' + str(repeat_counter)]['thres'] = thres
 
         with open(dest_path + '.'.join(file.split('.')[:-1]) + str(repeat_counter) + '.pkl', "wb") as h:
             pickle.dump(results, h)
@@ -560,11 +563,32 @@ def multiprocessing(n):
     for p in jobs:
         p.join()
 
+
+def test():
+    ori_files = listdir('../data/')
+    file = ori_files[0]
+    ori_files.remove(file)
+    results = {}
+
+    read = Supervised(file, ori_files, learner='nbm', seed=0, boost='nbm', stop='est', stopat=.9)
+    pos = Counter(read.body['label'][:read.newpart])['yes']
+    total = read.newpart
+
+    results['true'] = [pos, total]
+    results['supervised' + str(0)] = read.record
+    thres = Counter(read.clf.predict(read.csr_mat[:read.newpart]))['yes']
+    results['supervised' + str(0)]['thres'] = thres
+
+    with open('../temp/' + '.'.join(file.split('.')[:-1]) + str(0) + '.pkl', "wb") as h:
+        pickle.dump(results, h)
+
+
 if __name__ == "__main__":
 
     num_cpu = mp.cpu_count()
     print("core:", num_cpu)
-    Parallel(n_jobs=num_cpu-2)(delayed(exp_HPC)(i, 5, 'svm_linear', None, 7) for i in range(10))
+    #test()
+    Parallel(n_jobs=num_cpu-2)(delayed(exp_HPC)(i, 10, 'dt', 'dt') for i in range(10))
 
     #multiprocessing(10)
     #util.combine_n_runs(n=10)

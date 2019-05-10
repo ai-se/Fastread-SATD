@@ -140,7 +140,7 @@ class MAR(object):
 
 
 
-    def estimate_curve(self, clf, num_neg=0):
+    def estimate_curve(self, clf, num_neg=0, boost=None):
         from sklearn import linear_model
         import random
 
@@ -159,32 +159,14 @@ class MAR(object):
                     can = []
             return sample
 
-        # def prob_sample(probs):
-        #     order = np.argsort(probs)[::-1]
-        #     count = 0
-        #     can = []
-        #     sample = []
-        #     where = 1
-        #     for i, x in enumerate(probs[order]):
-        #         count = count + x
-        #         can.append(order[i])
-        #         if count >= where:
-        #             # sample.append(np.random.choice(can,1)[0])
-        #             sample.append(can[0])
-        #             where = where + 1
-        #             can = []
-        #     return sample
-
-
-
-
-
-
-        ###############################################
 
         # prob = clf.predict_proba(self.csr_mat)[:,:1]
-        prob1 = clf.decision_function(self.csr_mat)
-        prob = np.array([[x] for x in prob1])
+        if boost:
+            prob1 = self.body['yes_vote'].loc[~pd.isnull(self.body['yes_vote'])].values
+            prob = np.array([[x] for x in prob1])
+        else:
+            prob1 = clf.decision_function(self.csr_mat)
+            prob = np.array([[x] for x in prob1])
         old_pos = Counter(self.body['code'][self.newpart:])['yes']
         y = np.array([1 if x == 'yes' else 0 for x in self.body['code']])
         y0 = np.copy(y)
@@ -263,6 +245,9 @@ class MAR(object):
         temp = self.body['yes_vote'].loc[~pd.isnull(self.body['yes_vote'])][self.pool]
         order = np.argsort(temp)[::-1]
         certain_id = self.pool[order]
+        if self.enable_est:
+            self.est_num, self.est = self.estimate_curve(None,
+                                                         num_neg=Counter(self.body['code'][self.newpart:])['no'], boost=True)
         return certain_id
 
     ## Train model ##

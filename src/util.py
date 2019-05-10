@@ -135,9 +135,12 @@ def predict(clf, x_test, y_test, x_train, y_train, result_pd, col_name, bellweth
     no_ids = result_pd[result_pd.loc[:, col_name] == 'no'].index
     result_pd.loc[no_ids, 'no_vote'] += (1 * weight * weight)
 
-def vote(read, clf_name='nbm', seed=0):
+def vote(read, clf_name='nbm', seed=0, all=False, temp=''):
     train_df = read.body.loc[read.body['code'] != 'undetermined']
-    test_df = read.body.loc[read.body['code'] == 'undetermined']
+    if all:
+        test_df = read.body.loc[read.body['code'] != '']
+    else:
+        test_df = read.body.loc[read.body['code'] == 'undetermined']
 
     train_dataset_names = train_df.projectname.unique()
 
@@ -163,7 +166,10 @@ def vote(read, clf_name='nbm', seed=0):
     result_pd['code_ensemble'] = np.where(result_pd['yes_vote'] > result_pd['no_vote'], 'yes', 'no')
 
     read.body['yes_vote'] = result_pd['yes_vote']
-
+    #read.body['yes_vote'] = (result_pd['yes_vote'] - result_pd['yes_vote'].mean()) / (result_pd['yes_vote'].max() - result_pd['yes_vote'].min())
+    with open('../temp/vote_df' + temp.rsplit('.',1)[0] + '.pkl', "wb") as h:
+        pickle.dump(read.body, h)
+    #read.body.to_csv('../temp/vote_df' + temp + '.csv')
 
 def combine_n_runs(path='../dump/', dest_path='../dump/', n=10):
     files = listdir(path)
